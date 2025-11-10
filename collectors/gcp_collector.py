@@ -128,10 +128,7 @@ class GCPCollector(BaseCollector):
                 SELECT
                     DATE(usage_start_time) as usage_date,
                     service.description as service_name,
-                    SUM(cost) + SUM(IFNULL((
-                        SELECT SUM(c.amount)
-                        FROM UNNEST(credits) c
-                    ), 0)) as cost_usd
+                    SUM(cost) as cost_usd
                 FROM
                     `{self.config.project_id}.{self.config.bigquery_dataset}.gcp_billing_export_v1_*`
                 WHERE
